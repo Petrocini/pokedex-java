@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layoutDescription="@xml/activity_pokemon_detail_scene"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgFront"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgBack"
+            app:layout_constraintEnd_toEndOf="@+id/imgBack"
+            app:layout_constraintStart_toStartOf="@+id/imgBack"
+            app:layout_constraintTop_toTopOf="@+id/imgBack"
+            app:srcCompat="@drawable/ditto" />
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgFront"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ditto" />
+
+        <ImageView
+            android:id="@+id/imgBackShiny"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/imgFrontShiny"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgFront"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgFront"
+            app:layout_constraintTop_toTopOf="@+id/imgFront"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <androidx.constraintlayout.helper.widget.Carousel
+            android:id="@+id/carousel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="96dp"
+            app:carousel_backwardTransition="@+id/backward"
+            app:carousel_firstView="@+id/imgFront"
+            app:carousel_forwardTransition="@+id/forward"
+            app:carousel_infinite="true"
+            app:carousel_nextState="@+id/next"
+            app:carousel_previousState="@+id/previous"
+            app:constraint_referenced_ids="imgFront, imgBack, imgBackShiny, imgBackShiny" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
