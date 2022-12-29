@@ -1,5 +1,6 @@
 package com.example.pokedex.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,19 @@ import java.util.List;
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.MyViewHolder> {
 
     private final Context context;
-    private final List<Pokemon> pokemonList;
+    private List<Pokemon> pokemonList;
     private final View.OnClickListener onClickListener;
 
     public PokemonAdapter(Context context, List<Pokemon> pokemonList, View.OnClickListener onClickListener) {
         this.context = context;
         this.pokemonList = pokemonList;
         this.onClickListener = onClickListener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setFilteredList(List<Pokemon> filteredList) {
+        this.pokemonList = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull

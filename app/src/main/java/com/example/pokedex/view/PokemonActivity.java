@@ -1,6 +1,7 @@
 package com.example.pokedex.view;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +11,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.pokedex.databinding.ActivityPokemonBinding;
+import com.example.pokedex.entity.Pokemon;
 import com.example.pokedex.ui.BaseActivity;
 import com.example.pokedex.view.adapter.PokemonAdapter;
 import com.example.pokedex.viewmodel.PokemonViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -33,7 +39,31 @@ public class PokemonActivity extends BaseActivity {
         setContentView(pokemonBinding.getRoot());
 
         viewModelConfiguration();
+        recyclerViewConfiguration();
+        searchViewConfiguration();
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void viewModelConfiguration() {
+        pokemonViewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
+        pokemonViewModel.fetchPokemon(limit, offset);
+
+        pokemonViewModel.getIsLoadingMutableLiveData().observe(this, loading -> {
+            if (loading) {
+                showLoading();
+            } else {
+                hideLoading();
+            }
+        });
+
+        pokemonViewModel.getPokemonListMutableLiveData().observe(this, pokemons -> {
+            pokemonViewModel.getPokemonList().addAll(pokemons);
+            pokemonAdapter.notifyDataSetChanged();
+        });
+    }
+
+    private void recyclerViewConfiguration() {
         pokemonBinding.rvPokemon.setLayoutManager(new GridLayoutManager(this, 2));
         pokemonBinding.rvPokemon.setHasFixedSize(true);
         pokemonBinding.rvPokemon.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -56,25 +86,34 @@ public class PokemonActivity extends BaseActivity {
                     startActivity(new Intent(this, PokemonDetailActivity.class));
                 });
         pokemonBinding.rvPokemon.setAdapter(pokemonAdapter);
-
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private void viewModelConfiguration() {
-        pokemonViewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
-        pokemonViewModel.fetchPokemon(limit, offset);
+    private void searchViewConfiguration() {
+        pokemonBinding.svPokemon.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
 
-        pokemonViewModel.getIsLoadingMutableLiveData().observe(this, loading -> {
-            if (loading) {
-                showLoading();
-            } else {
-                hideLoading();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterPokemonList(newText);
+                return true;
             }
         });
+    }
 
-        pokemonViewModel.getPokemonListMutableLiveData().observe(this, pokemons -> {
-            pokemonViewModel.getPokemonList().addAll(pokemons);
-            pokemonAdapter.notifyDataSetChanged();
-        });
+    private void filterPokemonList(String text) {
+        List<Pokemon> filteredList = new ArrayList<>();
+        for (Pokemon pokemon : pokemonViewModel.getPokemonList()) {
+            if (pokemon.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(pokemon);
+            }
+        }
+
+        if (!filteredList.isEmpty()) {
+            pokemonAdapter.setFilteredList(filteredList);
+        }
     }
 }
