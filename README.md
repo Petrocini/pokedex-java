@@ -1,7 +1,5 @@
 # Pokedex - Java
 
-//<img src="exemplo-image.png" alt="exemplo imagem">
-
 > Está é uma pokedex desenvolvida utilizando a linguagem JAVA e suas principais bibliotecas nativas do android.
 
 ### Ajustes e melhorias
