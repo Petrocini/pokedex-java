@@ -8,7 +8,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 
 - [x] Listagem de pokemon
 - [x] Criação de SearchView
-- [] Tela de detalhes
+- [ ] Tela de detalhes
 
 ## 💻 Pré-requisitos
 
