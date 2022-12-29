@@ -1,6 +1,7 @@
 # Pokedex - Java
 
 > Está é uma pokedex desenvolvida utilizando a linguagem JAVA e suas principais bibliotecas nativas do android.
+> A API utilizada foi a POKEAPI, encontrada em https://pokeapi.co/.
 
 ### Ajustes e melhorias
 
